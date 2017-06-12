@@ -22,9 +22,10 @@ public class DubboConsumerTest {
 		 
 		ReferenceConfig<Hello> reference = new ReferenceConfig<Hello>();
 		reference.setApplication(application);
-		reference.setRegistry(registry); 
+//		reference.setRegistry(registry); 
 		reference.setInterface(Hello.class);
 		reference.setVersion("1.0.0");
+		reference.setUrl("dubbo://127.0.0.1");;
 		 
 		Hello xxxService = reference.get();
 		

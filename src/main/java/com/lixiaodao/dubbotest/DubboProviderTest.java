@@ -22,10 +22,13 @@ public class DubboProviderTest {
 		application.setName("xxx");
 		 
 		RegistryConfig registry = new RegistryConfig();
-		registry.setAddress("zookeeper://10.1.200.134:2181");
+		registry.setAddress("dubbo://127.0.0.1:12349");
+//		registry.setAddress("zookeeper://10.1.200.134:2181");
+//		registry.setAddress("zookeeper://10.1.200.134:2181");
 		 
 		ProtocolConfig protocol = new ProtocolConfig();
-		protocol.setName("dubbo");
+//		protocol.setName("dubbo");
+		protocol.setName("injvm");
 		protocol.setPort(12345);
 		protocol.setThreads(200);
 		 
