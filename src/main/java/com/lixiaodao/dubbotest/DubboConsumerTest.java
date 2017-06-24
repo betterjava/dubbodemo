@@ -16,16 +16,13 @@ public class DubboConsumerTest {
 		 
 		RegistryConfig registry = new RegistryConfig();
 		registry.setAddress("zookeeper://10.1.200.134:2181");
-		registry.setUsername("aaa");
-		registry.setPassword("bbb");
 		 
 		 
 		ReferenceConfig<Hello> reference = new ReferenceConfig<Hello>();
 		reference.setApplication(application);
-//		reference.setRegistry(registry); 
+		reference.setRegistry(registry); 
 		reference.setInterface(Hello.class);
 		reference.setVersion("1.0.0");
-		reference.setUrl("dubbo://127.0.0.1");;
 		 
 		Hello xxxService = reference.get();
 		
