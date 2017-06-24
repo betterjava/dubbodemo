@@ -7,9 +7,11 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.rpc.Exporter;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Protocol;
 import com.alibaba.dubbo.rpc.ProxyFactory;
+import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.alibaba.dubbo.rpc.protocol.injvm.InjvmProtocol;
 import com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker;
 import com.alibaba.dubbo.rpc.proxy.InvokerInvocationHandler;
@@ -74,5 +76,65 @@ public class TestKeys {
 		Hello proxy = (Hello) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{Hello.class}, new InvokerInvocationHandler(invoker));
 		proxy.sayHello();
 	}
+	
+	@Test
+	public void testProtocol() {
+		ProxyFactory proxyFactory = getProxyFactory();
+		Hello orginProxy = getHello();
+		Class<Hello> type = Hello.class;
+		URL url = new URL("injvm", "127.0.0.1", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
+		Invoker<Hello> invoker = proxyFactory.getInvoker(orginProxy, type, url);// AbstractProxyInvoker  
+		// 以上 invoker 就已经生成了
+		InjvmProtocol injvmProtocol = new InjvmProtocol();
+		Exporter<Hello> exportor = injvmProtocol.export(invoker);
+		
+		// 引用的时候，是首先获得一个invoker--重点是 如何找到这个invoker invoker =
+		// refprotocol.refer(interfaceClass, url);
+		// 然后 proxyfactory.getProxy(invoker)
+		
+		
+		//============我是分界线=============
+		InjvmProtocol injvmProtocolConsumer = InjvmProtocol.getInjvmProtocol();
+		ProxyFactory proxyFactoryConsumer = getProxyFactory();
+		
+		Invoker<Hello> referInvoker = injvmProtocolConsumer.refer(Hello.class, url); // InjvmInvoker --通过 map 获取 exportor ，export 中有invoker 的引用，最后会调用  AbstractProxyInvoker
+		Hello proxy = proxyFactoryConsumer.getProxy(referInvoker);
+		proxy.sayHello();
+	}
+	
+	@Test
+	public void testDubboInvo() throws InterruptedException{
+		ProxyFactory proxyFactory = getProxyFactory();
+		Hello orginProxy = getHello();
+		Class<Hello> type = Hello.class;
+		URL url = new URL("dubbo", "10.1.193.113", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
+		Invoker<Hello> invoker = proxyFactory.getInvoker(orginProxy, type, url); // AbstractProxyInvoker  
+		
+		DubboProtocol dubboProtocol = getDubboProtocol();
+		dubboProtocol.export(invoker);
+		
+		DubboProtocol consumerProtocol = new DubboProtocol();
+		
+		Invoker<Hello> referInvoker = consumerProtocol.refer(Hello.class, url);// 这儿是生成一个 dubboinvoker，把Url 编程这个dubboinvoker 持有的 连接，invoke ，就被变成了去远程调用
+		ProxyFactory  consumerProxyFactory = getProxyFactory();
+		Hello proxy = consumerProxyFactory.getProxy(referInvoker);
+		try {
+			proxy.sayHello();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while(true){
+			Thread.currentThread().sleep(1000);
+		}
+	}
+
+	
+	private static DubboProtocol getDubboProtocol() {
+		return new DubboProtocol();
+	}
+	
+	
+	
 	
 }

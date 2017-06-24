@@ -29,4 +29,26 @@ public class DubboConsumerTest {
 		xxxService.sayHello();
 		
 	}
+	
+	@Test
+	public void testConsumerLocal(){
+		ApplicationConfig application = new ApplicationConfig();
+		application.setName("yyy");
+		 
+		RegistryConfig registry = new RegistryConfig();
+		registry.setAddress("N/A");
+		 
+		 
+		ReferenceConfig<Hello> reference = new ReferenceConfig<Hello>();
+		reference.setApplication(application);
+		reference.setRegistry(registry); 
+		reference.setInterface(Hello.class);
+		reference.setVersion("1.0.0");
+		reference.setProtocol("injvm");
+		 
+		Hello xxxService = reference.get();
+		
+		xxxService.sayHello();
+		
+	}
 }
