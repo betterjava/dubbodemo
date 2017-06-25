@@ -15,6 +15,11 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.caucho</groupId>
+			<artifactId>hessian</artifactId>
+			<version>4.0.38</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

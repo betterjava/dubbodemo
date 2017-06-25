@@ -13,9 +13,11 @@ import com.alibaba.dubbo.rpc.Protocol;
 import com.alibaba.dubbo.rpc.ProxyFactory;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.alibaba.dubbo.rpc.protocol.injvm.InjvmProtocol;
+import com.alibaba.dubbo.rpc.protocol.rmi.RmiProtocol;
 import com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker;
 import com.alibaba.dubbo.rpc.proxy.InvokerInvocationHandler;
 import com.alibaba.dubbo.rpc.proxy.jdk.JdkProxyFactory;
+import com.alibaba.dubbo.rpc.proxy.wrapper.StubProxyFactoryWrapper;
 import com.lixiaodao.dubbotest.api.Hello;
 
 /**
@@ -107,7 +109,7 @@ public class TestKeys {
 		ProxyFactory proxyFactory = getProxyFactory();
 		Hello orginProxy = getHello();
 		Class<Hello> type = Hello.class;
-		URL url = new URL("dubbo", "10.1.193.113", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
+		URL url = new URL("这个参数并没有什么卵用", "10.1.193.113", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
 		Invoker<Hello> invoker = proxyFactory.getInvoker(orginProxy, type, url); // AbstractProxyInvoker  
 		
 		DubboProtocol dubboProtocol = getDubboProtocol();
@@ -115,7 +117,8 @@ public class TestKeys {
 		
 		DubboProtocol consumerProtocol = new DubboProtocol();
 		
-		Invoker<Hello> referInvoker = consumerProtocol.refer(Hello.class, url);// 这儿是生成一个 dubboinvoker，把Url 编程这个dubboinvoker 持有的 连接，invoke ，就被变成了去远程调用
+		URL url2 = new URL("这个参数并没有什么卵用", "10.1.193.113", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
+		Invoker<Hello> referInvoker = consumerProtocol.refer(Hello.class, url2);// 这儿是生成一个 dubboinvoker，把Url 编程这个dubboinvoker 持有的 连接，invoke ，就被变成了去远程调用
 		ProxyFactory  consumerProxyFactory = getProxyFactory();
 		Hello proxy = consumerProxyFactory.getProxy(referInvoker);
 		try {
@@ -135,7 +138,33 @@ public class TestKeys {
 	}
 	
 	
-	@
+	@Test
+	public void testHessionInvo() throws InterruptedException{
+//		ProxyFactory proxyFactory = new StubProxyFactoryWrapper(new JdkProxyFactory());
+		ProxyFactory proxyFactory =  new JdkProxyFactory();
+		Hello orginProxy = getHello();
+		Class<Hello> type = Hello.class;
+		URL url = new URL("这个参数并没有什么卵用", "10.1.193.113", 12345).setServiceInterface("com.lixiaodao.dubbotest.api.Hello");
+		Invoker<Hello> invoker = proxyFactory.getInvoker(orginProxy, type, url); // AbstractProxyInvoker  
+		RmiProtocol providerProtocol = new RmiProtocol();
+		providerProtocol.setProxyFactory(proxyFactory);
+		providerProtocol.export(invoker);
+		
+		RmiProtocol consumerProtocol = new RmiProtocol();
+		
+		Invoker<Hello> referInvoker = consumerProtocol.refer(Hello.class, url);// 这儿是生成一个 dubboinvoker，把Url 编程这个dubboinvoker 持有的 连接，invoke ，就被变成了去远程调用
+		ProxyFactory consumerProxyFactory = new StubProxyFactoryWrapper(new JdkProxyFactory());
+		Hello proxy = consumerProxyFactory.getProxy(referInvoker);
+		try {
+			proxy.sayHello();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while(true){
+			Thread.currentThread().sleep(1000);
+		}
+	}
 	
 	
 }
