@@ -58,9 +58,9 @@ public class DubboProviderTest {
 	@Test
 	public void startaProviderLocal() {
 		
-		 ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-dubbo.xml");
+		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-dubbo.xml");
 		
-		 Hello hello = (Hello) applicationContext.getBean("helloService");
+		Hello hello = (Hello) applicationContext.getBean("helloService");
 		
 		ApplicationConfig application = new ApplicationConfig();
 		application.setName("xxx");
