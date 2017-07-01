@@ -1,4 +1,4 @@
-package com.lixiaodao.dubbotest.demo;
+package com.lixiaodao.dubbotest.demo.consumer;
 
 import org.junit.Test;
 
