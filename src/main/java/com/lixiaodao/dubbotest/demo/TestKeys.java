@@ -1,4 +1,4 @@
-package com.lixiaodao.dubbotest;
+package com.lixiaodao.dubbotest.demo;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -18,7 +18,7 @@ import com.alibaba.dubbo.rpc.proxy.AbstractProxyInvoker;
 import com.alibaba.dubbo.rpc.proxy.InvokerInvocationHandler;
 import com.alibaba.dubbo.rpc.proxy.jdk.JdkProxyFactory;
 import com.alibaba.dubbo.rpc.proxy.wrapper.StubProxyFactoryWrapper;
-import com.lixiaodao.dubbotest.api.Hello;
+import com.lixiaodao.dubbotest.demo.api.Hello;
 
 /**
  * @author cookie.liya

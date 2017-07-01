@@ -4,12 +4,8 @@ import org.junit.Test;
 
 import com.alibaba.dubbo.container.Main;
 
-public class TestDubo {
+public class DuboMain {
 	
-	@Test
-	public void testSome(){
-		System.out.println("hello");
-	}
 	
 	@Test
 	public void startDubbo(){

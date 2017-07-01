@@ -1,4 +1,4 @@
-package com.lixiaodao.dubbotest;
+package com.lixiaodao.dubbotest.demo;
 
 import com.alibaba.dubbo.common.compiler.support.AdaptiveCompiler;
 import com.alibaba.dubbo.common.extension.Adaptive;

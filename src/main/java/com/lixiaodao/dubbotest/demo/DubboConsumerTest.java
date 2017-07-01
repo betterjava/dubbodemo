@@ -1,11 +1,11 @@
-package com.lixiaodao.dubbotest;
+package com.lixiaodao.dubbotest.demo;
 
 import org.junit.Test;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.lixiaodao.dubbotest.api.Hello;
+import com.lixiaodao.dubbotest.demo.api.Hello;
 
 public class DubboConsumerTest {
 	

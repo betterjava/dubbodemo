@@ -5,7 +5,7 @@ import java.lang.reflect.Proxy;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.lixiaodao.dubbotest.api.Hello;
+import com.lixiaodao.dubbotest.demo.api.Hello;
 
 /**
  * @author cookie.liya

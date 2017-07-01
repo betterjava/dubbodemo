@@ -1,6 +1,6 @@
-package com.lixiaodao.dubbotest.provider;
+package com.lixiaodao.dubbotest.demo.provider;
 
-import com.lixiaodao.dubbotest.api.Hello;
+import com.lixiaodao.dubbotest.demo.api.Hello;
 
 public class HelloService implements Hello{
 

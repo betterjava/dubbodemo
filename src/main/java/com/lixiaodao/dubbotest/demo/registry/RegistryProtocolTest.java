@@ -1,4 +1,4 @@
-package com.lixiaodao.dubbotest.registry;
+package com.lixiaodao.dubbotest.demo.registry;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,7 +16,7 @@ import com.alibaba.dubbo.rpc.ProxyFactory;
 import com.alibaba.dubbo.rpc.cluster.support.FailoverCluster;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import com.alibaba.dubbo.rpc.proxy.jdk.JdkProxyFactory;
-import com.lixiaodao.dubbotest.api.Hello;
+import com.lixiaodao.dubbotest.demo.api.Hello;
 
 /**
  * @author cookie.liya
